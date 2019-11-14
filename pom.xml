@@ -7,6 +7,7 @@
   <version>1.0.0-SNAPSHOT</version>
   <name>haveibeenpwned4j</name>
   <description>The ultimate Java library for Troy Hunt's ';-- Have I Been Pwned: API v3</description>
+  <url>https://github.com/pingunaut/haveibeenpwned4j</url>
 
   <licenses>
     <license>
@@ -19,7 +20,7 @@
   <scm>
     <connection>scm:git:git@github.com:pingunaut/haveibeenpwned4j.git</connection>
     <developerConnection>scm:git:git@github.com:pingunaut/haveibeenpwned4j.git</developerConnection>
-    <url>https://github.com/pingunaut/haveibeenpwned4j.git</url>
+    <url>https://github.com/pingunaut/haveibeenpwned4j</url>
     <tag>HEAD</tag>
   </scm>
 
