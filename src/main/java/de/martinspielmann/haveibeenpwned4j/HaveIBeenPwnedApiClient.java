@@ -395,6 +395,16 @@ public class HaveIBeenPwnedApiClient {
   /**
    * Gets the breaches.
    *
+   * @return the breaches
+   */
+  public List<Breach> getBreaches() {
+    return getBreaches(null);
+  }
+
+
+  /**
+   * Gets the breaches.
+   *
    * @param domain the domain
    * @return the breaches
    */
