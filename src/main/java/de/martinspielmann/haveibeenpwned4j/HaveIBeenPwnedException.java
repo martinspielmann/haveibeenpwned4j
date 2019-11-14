@@ -1,6 +1,6 @@
 package de.martinspielmann.haveibeenpwned4j;
 
-public class HaveIBeenPwnedException extends Exception {
+public class HaveIBeenPwnedException extends RuntimeException {
 
   private static final long serialVersionUID = 1L;
 

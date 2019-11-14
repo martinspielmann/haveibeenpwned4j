@@ -326,22 +326,27 @@ public class HaveIBeenPwnedApiClient {
    * @return the body handler
    */
   private <T> BodyHandler<T> internalBodyHandler(Mapper<T> mapper) {
-    return responseInfo -> BodySubscribers.mapping(BodySubscribers.ofString(StandardCharsets.UTF_8),
-        mapper::map);
+    return responseInfo -> {
+      Status s = Status.of(responseInfo.statusCode());
+      if (s.isError()) {
+        throw new HaveIBeenPwnedException("Error handling body", s);
+      } else {
+        return BodySubscribers.mapping(BodySubscribers.ofString(StandardCharsets.UTF_8),
+            mapper::map);
+      }
+    };
   }
 
   /**
    * Internal api request.
    *
    * @param <T> the generic type
-   * @param url the url
+   * @param url the URL
    * @param bodyHandler the body handler
    * @param errorMessage the error message
-   * @return the t
-   * @throws HaveIBeenPwnedException if something unexpected happens during the request
+   * @return the request's response
    */
-  private <T> T internalApiRequest(String url, BodyHandler<T> bodyHandler, String errorMessage)
-      throws HaveIBeenPwnedException {
+  private <T> T internalApiRequest(String url, BodyHandler<T> bodyHandler, String errorMessage) {
     try {
       return getHttpClient().send(buildRequest(url), bodyHandler).body();
     } catch (IOException e) {
@@ -362,9 +367,8 @@ public class HaveIBeenPwnedApiClient {
    *
    * @param account the account
    * @return the breaches for account
-   * @throws HaveIBeenPwnedException if something unexpected happens during the request
    */
-  public List<Breach> getBreachesForAccount(String account) throws HaveIBeenPwnedException {
+  public List<Breach> getBreachesForAccount(String account) {
     return getBreachesForAccount(account, null, false, true);
   }
 
@@ -376,10 +380,9 @@ public class HaveIBeenPwnedApiClient {
    * @param truncateResponse the truncate response
    * @param includeUnverified the include unverified
    * @return the breaches for account
-   * @throws HaveIBeenPwnedException if something unexpected happens during the request
    */
   public List<Breach> getBreachesForAccount(String account, String domain, boolean truncateResponse,
-      boolean includeUnverified) throws HaveIBeenPwnedException {
+      boolean includeUnverified) {
     String url = HIBP_API_URL_V3 + "breachedaccount/" + StringHelper.urlEncode(account)
         + "?truncateResponse=" + truncateResponse + "&includeUnverified=" + includeUnverified;
     if (domain != null) {
@@ -394,9 +397,8 @@ public class HaveIBeenPwnedApiClient {
    *
    * @param domain the domain
    * @return the breaches
-   * @throws HaveIBeenPwnedException if something unexpected happens during the request
    */
-  public List<Breach> getBreaches(String domain) throws HaveIBeenPwnedException {
+  public List<Breach> getBreaches(String domain) {
     String url = HIBP_API_URL_V3 + "breaches";
     if (domain != null) {
       url += "?domain=" + domain;
@@ -413,7 +415,7 @@ public class HaveIBeenPwnedApiClient {
    * @throws HaveIBeenPwnedException if something unexpected happens during the request
    * @see https://haveibeenpwned.com/API/v3#SingleBreach
    */
-  public Breach getSingleBreach(String name) throws HaveIBeenPwnedException {
+  public Breach getSingleBreach(String name) {
     return internalApiRequest(HIBP_API_URL_V3 + "breach/" + name,
         internalBodyHandler(getBreachMapper()), "Error checking for breach with name " + name);
   }
@@ -422,9 +424,8 @@ public class HaveIBeenPwnedApiClient {
    * Gets the data classes.
    *
    * @return the data classes
-   * @throws HaveIBeenPwnedException if something unexpected happens during the request
    */
-  public List<String> getDataClasses() throws HaveIBeenPwnedException {
+  public List<String> getDataClasses() {
     return internalApiRequest(HIBP_API_URL_V3 + "dataclasses",
         internalBodyHandler(getDataClassesListMapper()), "Error checking for data classes");
   }
@@ -434,9 +435,8 @@ public class HaveIBeenPwnedApiClient {
    *
    * @param account the account
    * @return the pastes for account
-   * @throws HaveIBeenPwnedException if something unexpected happens during the request
    */
-  public List<Paste> getPastesForAccount(String account) throws HaveIBeenPwnedException {
+  public List<Paste> getPastesForAccount(String account) {
     String url = HIBP_API_URL_V3 + "pasteaccount/" + StringHelper.urlEncode(account);
     return internalApiRequest(url, internalBodyHandler(getPasteListMapper()),
         "Error checking for pastes");
@@ -449,9 +449,8 @@ public class HaveIBeenPwnedApiClient {
    *
    * @param password the password to be checked
    * @return true, if the password is pwned
-   * @throws HaveIBeenPwnedException if something unexpected happens during the request
    */
-  public boolean isPasswordPwned(String password) throws HaveIBeenPwnedException {
+  public boolean isPasswordPwned(String password) {
     String url = "https://api.pwnedpasswords.com/range/" + StringHelper.getHashPrefix(password);
     try {
       HttpResponse<String> res = getHttpClient().send(buildRequest(url), BodyHandlers.ofString());

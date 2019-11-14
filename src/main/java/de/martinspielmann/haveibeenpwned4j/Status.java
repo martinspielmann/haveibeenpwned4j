@@ -10,16 +10,18 @@ import java.util.Map;
  */
 public enum Status {
 
-  UNKNOWN_API_ERROR(-1), 
-  OK(200), 
-  BAD_REQUEST(400), 
-  UNAUTHORIZED(401), 
-  FORBIDDEN(403), 
-  NOT_FOUND(404), 
-  TOO_MANY_REQUESTS(429),
-  SERVICE_UNAVAILABLE(503);
+  UNKNOWN_API_ERROR(-1, true), 
+  OK(200, false), 
+  BAD_REQUEST(400, true), 
+  UNAUTHORIZED(401, true), 
+  FORBIDDEN(403, true), 
+  NOT_FOUND(404, false), 
+  TOO_MANY_REQUESTS(429, true),
+  SERVICE_UNAVAILABLE(503, true);
 
   private int code;
+  private boolean isError;
+
   private static final Map<Integer, Status> map = new HashMap<>();
 
   static {
@@ -28,12 +30,17 @@ public enum Status {
     }
   }
 
-  Status(int code) {
+  Status(int code, boolean isError) {
     this.code = code;
+    this.isError = isError;
   }
 
   public int getCode() {
     return code;
+  }
+  
+  public boolean isError() {
+    return isError;
   }
 
   public static Status of(int code) {

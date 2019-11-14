@@ -146,7 +146,7 @@ class HaveIBeenPwnedApiClientTest {
   }
 
   @Test
-  void testGetBreachesForAccountString() throws HaveIBeenPwnedException {
+  void testGetBreachesForAccountString() {
     List<Breach> breachesForAccount = clientWithApiKey.getBreachesForAccount("foo.bar@example.com");
     assertTrue(breachesForAccount.size() > 0);
     breachesForAccount.forEach(b -> {
@@ -164,7 +164,7 @@ class HaveIBeenPwnedApiClientTest {
   }
 
   @Test
-  void testGetBreachesForAccountStringStringBooleanBoolean() throws HaveIBeenPwnedException {
+  void testGetBreachesForAccountStringStringBooleanBoolean() {
     List<Breach> breachesForAccount =
         clientWithApiKey.getBreachesForAccount("foo.bar@example.com", null, true, false);
     assertTrue(breachesForAccount.size() > 0);
@@ -184,20 +184,20 @@ class HaveIBeenPwnedApiClientTest {
   }
 
   @Test
-  void testGetBreachesForAccountNonExisting() throws HaveIBeenPwnedException {
+  void testGetBreachesForAccountNonExisting() {
     List<Breach> breachesForAccount =
         clientWithApiKey.getBreachesForAccount(UUID.randomUUID().toString() + "@example.com");
     assertTrue(breachesForAccount.isEmpty());
   }
 
   @Test
-  void testGetBreachesForAccountStringNoApiKey() throws HaveIBeenPwnedException {
+  void testGetBreachesForAccountStringNoApiKey() {
     assertThrows(HaveIBeenPwnedException.class,
         () -> clientWithoutApiKey.getBreachesForAccount("foo.bar@example.com"));
   }
 
   @Test
-  void testGetBreaches() throws HaveIBeenPwnedException {
+  void testGetBreaches() {
     List<Breach> breachesForAccount = clientWithoutApiKey.getBreaches("adobe.com");
     assertTrue(breachesForAccount.size() >= 1);
     // verify result is truncated. only name field is mapped
@@ -216,7 +216,7 @@ class HaveIBeenPwnedApiClientTest {
   }
 
   @Test
-  void testGetSingleBreach() throws HaveIBeenPwnedException {
+  void testGetSingleBreach() {
     Breach b = clientWithoutApiKey.getSingleBreach("Adobe");
     assertNotNull(b.getAddedDate());
     assertNotNull(b.getBreachDate());
@@ -231,19 +231,19 @@ class HaveIBeenPwnedApiClientTest {
   }
 
   @Test
-  void testGetSingleBreachNonExisting() throws HaveIBeenPwnedException {
+  void testGetSingleBreachNonExisting() {
     Breach b = clientWithoutApiKey.getSingleBreach(UUID.randomUUID().toString());
     assertNull(b);
   }
 
   @Test
-  void testGetDataClasses() throws HaveIBeenPwnedException {
+  void testGetDataClasses() {
     List<String> dataClasses = clientWithoutApiKey.getDataClasses();
     assertTrue(dataClasses.size() > 0);
   }
 
   @Test
-  void testGetPastesForAccount() throws HaveIBeenPwnedException {
+  void testGetPastesForAccount() {
     List<Paste> pastes = clientWithApiKey.getPastesForAccount("dilipsinghrana4@gmail.com");
     assertTrue(pastes.size() > 0);
     pastes.forEach(b -> {
@@ -255,25 +255,25 @@ class HaveIBeenPwnedApiClientTest {
   }
 
   @Test
-  void testGetPastesForNonExisting() throws HaveIBeenPwnedException {
+  void testGetPastesForNonExisting() {
     List<Paste> pastes =
         clientWithApiKey.getPastesForAccount(UUID.randomUUID().toString() + "@gmail.com");
     assertTrue(pastes.isEmpty());
   }
 
   @Test
-  void testGetPastesForAccountWithoutApiKey() throws HaveIBeenPwnedException {
+  void testGetPastesForAccountWithoutApiKey() {
     assertThrows(HaveIBeenPwnedException.class,
         () -> clientWithoutApiKey.getPastesForAccount("foo.bar@example.com"));
   }
 
   @Test
-  void testIsPasswordPwnedWithCommonPassword() throws HaveIBeenPwnedException {
+  void testIsPasswordPwnedWithCommonPassword() {
     assertTrue(clientWithoutApiKey.isPasswordPwned("password123"));
   }
 
   @Test
-  void testIsPasswordPwnedWithRandomPassword() throws HaveIBeenPwnedException {
+  void testIsPasswordPwnedWithRandomPassword() {
     assertFalse(clientWithoutApiKey.isPasswordPwned(UUID.randomUUID().toString()));
   }
 
