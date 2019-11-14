@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.martinspielmann.haveibeenpwned4j</groupId>
   <artifactId>haveibeenpwned4j</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1-SNAPSHOT</version>
   <name>haveibeenpwned4j</name>
   <description>A dependency free Java library for Troy Hunt's ';-- Have I Been Pwned: API v3</description>
 
@@ -18,7 +18,7 @@
     <connection>scm:git:git@github.com:pingunaut/haveibeenpwned4j.git</connection>
     <developerConnection>scm:git:git@github.com:pingunaut/haveibeenpwned4j.git</developerConnection>
     <url>https://github.com/pingunaut/haveibeenpwned4j.git</url>
-    <tag>haveibeenpwned4j-1.0.0</tag>
+    <tag>HEAD</tag>
   </scm>
 
   <developers>
