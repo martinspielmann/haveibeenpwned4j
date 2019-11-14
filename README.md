@@ -1,12 +1,56 @@
 # haveibeenpwned4j
 
-A dependency free Java library for Troy Hunt's ';-- Have I Been Pwned (v3).
+The ultimate Java library for [Troy Hunt's](https://www.troyhunt.com/) `';-- Have I Been Pwned: API v3`.
 
 [![Build Status](https://github.com/pingunaut/haveibeenpwned4j/workflows/Java%20CI/badge.svg)](https://github.com/pingunaut/haveibeenpwned4j/actions)
-[![Coverage](https://img.shields.io/sonar/https/sonarcloud.io/haveibeenpwned4j/coverage.svg)](https://sonarcloud.io/component_measures?id=wicket-pwnedpasswords-validator&metric=coverage)
+![Contributors](https://img.shields.io/github/contributors/pingunaut/haveibeenpwned4j.svg)
+[![Apache-2.0](https://img.shields.io/github/license/pingunaut/haveibeenpwned4j.svg)](https://raw.githubusercontent.com/pingunaut/haveibeenpwned4j/master/LICENSE)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=de.martinspielmann.haveibeenpwned4j%3Ahaveibeenpwned4j&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=de.martinspielmann.haveibeenpwned4j%3Ahaveibeenpwned4j)
+[![Coverage](https://img.shields.io/sonar/https/sonarcloud.io/de.martinspielmann.haveibeenpwned4j%3Ahaveibeenpwned4j/coverage.svg)](https://sonarcloud.io/component_measures?id=de.martinspielmann.haveibeenpwned4j%3Ahaveibeenpwned4j&metric=coverage)
+
+
+## About The Project
+
+[Troy Hunt's](https://www.troyhunt.com/) `';-- Have I Been Pwned` is an awesome project that lets you check if you have an account that has been compromised in a data breach.
+
+As you can see on the [Consumers](https://haveibeenpwned.com/API/Consumers) page 
+of [https://haveibeenpwned.com](https://haveibeenpwned.com), there are already Java clients available for the API.
+Unfortunately some do not fully implement the API or have weird dependencies.
+
+Here comes **haveibeenpwned4j** awesomeness:
+
+* All features of `';-- Have I Been Pwned: API v3` implemented (incl. support for providing your API key) ✔ 
+  * Check if a password has been breached	✔
+  * Check if an account has been breached	✔
+  * Check if an account has been in a paste	✔
+  * Get all breaches (or based on a domain)	✔
+  * Get a single breach	✔
+* No (yes, you are reading right... *NO!*) dependencies	✔
+* Apache License Version 2.0 ✔
+* Available from Maven Central ✔
+
+
+## Getting Started
+
+### Prerequisites
+
+Install Java on your system
+
+* Java: Ubuntu
+```sh
+sudo apt install default-jdk
+```
+* Java: Fedora
+```sh
+sudo dnf install java-11-openjdk
+```
+* Java: Windows
+Install Java 11: E.g. [OpenJDK](https://adoptopenjdk.net/?variant=openjdk11&jvmVariant=hotspot) or [Oracle JDK](https://www.oracle.com/technetwork/java/javase/downloads/jdk11-downloads-5066655.html)
+
+
 ## Usage
 
-1. Include the Maven dependency in your pom.xml
+1. Include the dependency in your pom.xml
 
 ```xml
 <dependency>
@@ -16,43 +60,98 @@ A dependency free Java library for Troy Hunt's ';-- Have I Been Pwned (v3).
 </dependency>
 ```
 
-2. ...
+2. Create a new `HaveIBeenPwnedApiClient` and start using it
 
 ```java
+/**
+ * <strong>Watch out:</strong> Authorization is required for all APIs that enable searching HIBP
+ * by email address, namely bet breaches for an account, and getting pastes for and account. 
+ * An API key is required to make an authorized call and can
+ * be obtained on the API key page.
+ * 
+ * @see https://haveibeenpwned.com/API/v3#Authorisation
+ * @see https://haveibeenpwned.com/API/Key
+ */
+ 
+HaveIBeenPwnedApiClient client = new HaveIBeenPwnedApiClient("my-super-secret-api-key");
 
+// find out if given password has been breached
+boolean isPasswordPwned = client.isPasswordPwned("password123");
 
+// get breaches for an account (needs API key)
+List<Breach> breachesByAccount = client.getBreachesForAccount("foo.bar@example.com");
+
+// get all breaches
+List<Breach> allBreaches = client.getBreaches();
+
+// find breach by name
+Breach singleBreach = client.getSingleBreach("Example Breach");
+
+// get pastes for an account (needs API key)
+List<Paste> pastes = client.getPastesForAccount("foo.bar@example.com");
 ```
-
-## Prerequisites
-
-* Maven (or download jar from [Releases](https://github.com/pingunaut/haveibeenpwned4j/releases))
-
-## Development 
-
-```
-git clone https://github.com/pingunaut/wicket-pwnedpasswords-validator.git
-cd wicket-pwnedpasswords-validator
-mvn test
-```
-
-## Built With
-
-* [Maven](https://maven.apache.org/)
 
 ## Contributing
 
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
+If you have any problem or idea, dont hesitate to
+<a href="https://github.com/pingunaut/haveibeenpwned4j/issues">report a bug</a>
+or
+<a href="https://github.com/pingunaut/haveibeenpwned4j/issues">request a feature</a>.
+
+If you want to help out with some code, tests or documentation, just follow these steps:
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+Any contributions you make are **highly appreciated**.
+
+### Prepare
+
+Install Apache Maven on your developer system
+
+* Java and Apache Maven: Ubuntu
+```sh
+sudo apt install maven
+```
+* Java and Apache Maven: Fedora
+```sh
+sudo dnf install maven
+```
+* Java and Apache Maven: Windows
+  * Install Java 11: E.g. [OpenJDK](https://adoptopenjdk.net/?variant=openjdk11&jvmVariant=hotspot) or [Oracle JDK](https://www.oracle.com/technetwork/java/javase/downloads/jdk11-downloads-5066655.html)
+  * Download [Apache Maven](http://maven.apache.org/download.cgi) and install like described [here](http://maven.apache.org/install.html)
+
+
+### Develop
+
+```sh
+git clone https://github.com/pingunaut/haveibeenpwned4j.git
+cd haveibeenpwned4j
+
+# to make all the tests run, you need to provide your HIBP API key as an environment variable
+HIPB_API_KEY=your-super-secret-key && mvn test
+```
+
 
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+This project uses [Semantic Versioning](https://semver.org/)
 
-## Authors
-
-* **Martin Spielmann** - *Initial work* - [pingunaut](https://github.com/pingunaut)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
 ## License
 
-This project is licensed under The Apache Software License, Version 2.0 - see the [LICENSE.md](LICENSE.md) file for details
+Distributed under the Apache License Version 2.0. See `LICENSE` for more information.
+
+
+## Contact
+
+Martin Spielmann - [@pingunaut](https://twitter.com/pingunaut)
+
+Project Link: [https://github.com/pingunaut/haveibeenpwned4j](https://github.com/pingunaut/haveibeenpwned4j)
+
+
+## Acknowledgements
+* [';-- Have I Been Pwned](https://haveibeenpwned.com/)
