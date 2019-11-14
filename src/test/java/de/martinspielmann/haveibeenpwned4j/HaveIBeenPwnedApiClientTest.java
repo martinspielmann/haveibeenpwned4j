@@ -34,6 +34,7 @@ class HaveIBeenPwnedApiClientTest {
     clientWithApiKey = new HaveIBeenPwnedApiClient(API_KEY);
     clientWithoutApiKey = new HaveIBeenPwnedApiClient();
     try {
+      // bad idea to add a sleep here, but it's to avoid TOO_MANY_REQUESTS errors.
       Thread.sleep(2000);
     } catch (InterruptedException e) {
       Thread.currentThread().interrupt();

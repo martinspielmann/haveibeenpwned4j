@@ -17,8 +17,7 @@ public class DefaultPwnedPasswordsMapper implements PwnedPasswordsMapper {
   }
 
   @Override
-  public boolean map(int responseStatus, String responseBody, String password)
-      throws HaveIBeenPwnedException {
+  public boolean map(int responseStatus, String responseBody, String password) {
     Status status = Status.of(responseStatus);
     // if nothing is found or everything is OK
     if (status.equals(Status.NOT_FOUND)) {

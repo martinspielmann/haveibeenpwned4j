@@ -5,6 +5,9 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+/**
+ * The Class StringHelper provides common utilities to work with strings.
+ */
 public class StringHelper {
 
   private static final String SHA_1_ALGORITHM = "SHA-1";
@@ -15,25 +18,28 @@ public class StringHelper {
   }
 
   /**
-   * The API allows to check passwords directly. To avoid url encoding issues with complicated
-   * passwords, we use the possibility to check sha1 hashes
+   * Get the SHA-1 hash of the given string.
    *
-   * @param pw the password
-   * @return sha1 hash of the given password
-   * @throws HaveIBeenPwnedException
-   * @throws NoSuchAlgorithmException if SHA-1 digest not available
+   * @param string the string
+   * @return the SHA-1 hash of the string
    */
-  public static String sha1(String pw) throws HaveIBeenPwnedException {
+  public static String sha1(String string) {
     MessageDigest digest;
     try {
       digest = MessageDigest.getInstance(SHA_1_ALGORITHM);
     } catch (NoSuchAlgorithmException e) {
       throw new HaveIBeenPwnedException("Unable to get digest for " + SHA_1_ALGORITHM, e);
     }
-    byte[] encodedhash = digest.digest(pw.getBytes(StandardCharsets.UTF_8));
+    byte[] encodedhash = digest.digest(string.getBytes(StandardCharsets.UTF_8));
     return toHexString(encodedhash);
   }
 
+  /**
+   * To hex string.
+   *
+   * @param bytes the bytes
+   * @return the string
+   */
   public static String toHexString(byte[] bytes) {
     char[] hexChars = new char[bytes.length * 2];
     for (int j = 0; j < bytes.length; j++) {
@@ -44,14 +50,32 @@ public class StringHelper {
     return new String(hexChars);
   }
 
-  public static String getHashPrefix(String password) throws HaveIBeenPwnedException {
+  /**
+   * Gets the hash prefix.
+   *
+   * @param password the password
+   * @return the hash prefix
+   */
+  public static String getHashPrefix(String password) {
     return sha1(password).substring(0, 5);
   }
 
-  public static String getHashSuffix(String password) throws HaveIBeenPwnedException {
+  /**
+   * Gets the hash suffix.
+   *
+   * @param password the password
+   * @return the hash suffix
+   */
+  public static String getHashSuffix(String password) {
     return sha1(password).substring(5);
   }
 
+  /**
+   * Url encode.
+   *
+   * @param input the input
+   * @return the string
+   */
   public static String urlEncode(String input) {
     return URLEncoder.encode(input, StandardCharsets.UTF_8);
   }
