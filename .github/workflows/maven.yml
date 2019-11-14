@@ -1,0 +1,20 @@
+name: Java CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Set up JDK 11
+      uses: actions/setup-java@v1
+      with:
+        java-version: 11
+    - name: Build with Maven
+      run: mvn package sonar:sonar -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=pingunaut-github -Dsonar.login=${{ secrets.SONAR_TOKEN }} -Dsonar.pullrequest.github.token.secured=${{ secrets.GITHUB_TOKEN }} --file pom.xml
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        HIBP_API_KEY: ${{ secrets.HIBP_API_KEY }}
