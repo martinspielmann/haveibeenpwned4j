@@ -32,7 +32,7 @@ import de.martinspielmann.haveibeenpwned4j.model.Paste;
 /**
  * This API client implements all APIs provided by Troy Hunt's ';-- Have I Been Pwned: API v3.
  * 
- * @see https://haveibeenpwned.com/API/v3
+ * @see <a href="https://haveibeenpwned.com/API/v3">https://haveibeenpwned.com/API/v3</a>
  * @author Martin Spielmann
  */
 public class HaveIBeenPwnedApiClient {
@@ -77,8 +77,9 @@ public class HaveIBeenPwnedApiClient {
    * {@link #getPastesForAccount(String)}. An API key is required to make an authorized call and can
    * be obtained on the API key page.
    * 
-   * @see https://haveibeenpwned.com/API/v3#Authorisation
-   * @see https://haveibeenpwned.com/API/Key
+   * @see <a href=
+   *      "https://haveibeenpwned.com/API/v3#Authorisation">https://haveibeenpwned.com/API/v3#Authorisation</a>
+   * @see <a href="https://haveibeenpwned.com/API/Key">https://haveibeenpwned.com/API/Key</a>
    */
   public HaveIBeenPwnedApiClient() {
     this(null, null, null);
@@ -95,8 +96,9 @@ public class HaveIBeenPwnedApiClient {
    * 
    * @param hibpApiKey the API key
    * 
-   * @see https://haveibeenpwned.com/API/v3#Authorisation
-   * @see https://haveibeenpwned.com/API/Key
+   * @see <a href=
+   *      "https://haveibeenpwned.com/API/v3#Authorisation">https://haveibeenpwned.com/API/v3#Authorisation</a>
+   * @see <a href="https://haveibeenpwned.com/API/Key">https://haveibeenpwned.com/API/Key</a>
    */
   public HaveIBeenPwnedApiClient(String hibpApiKey) {
     this(hibpApiKey, null, null);
@@ -114,8 +116,9 @@ public class HaveIBeenPwnedApiClient {
    * @param hibpApiKey the API key
    * @param proxy the proxy
    * 
-   * @see https://haveibeenpwned.com/API/v3#Authorisation
-   * @see https://haveibeenpwned.com/API/Key
+   * @see <a href=
+   *      "https://haveibeenpwned.com/API/v3#Authorisation">https://haveibeenpwned.com/API/v3#Authorisation</a>
+   * @see <a href="https://haveibeenpwned.com/API/Key">https://haveibeenpwned.com/API/Key</a>
    */
   public HaveIBeenPwnedApiClient(String hibpApiKey, InetSocketAddress proxy) {
     this(hibpApiKey, proxy, null);
@@ -135,8 +138,9 @@ public class HaveIBeenPwnedApiClient {
    * @param proxy the proxy
    * @param userAgent the user agent
    * 
-   * @see https://haveibeenpwned.com/API/v3#Authorisation
-   * @see https://haveibeenpwned.com/API/Key
+   * @see <a href=
+   *      "https://haveibeenpwned.com/API/v3#Authorisation">https://haveibeenpwned.com/API/v3#Authorisation</a>
+   * @see <a href="https://haveibeenpwned.com/API/Key">https://haveibeenpwned.com/API/Key</a>
    */
   public HaveIBeenPwnedApiClient(String hibpApiKey, InetSocketAddress proxy, String userAgent) {
     super();
@@ -423,7 +427,8 @@ public class HaveIBeenPwnedApiClient {
    * @param name the name of the breach
    * @return the breach
    * @throws HaveIBeenPwnedException if something unexpected happens during the request
-   * @see https://haveibeenpwned.com/API/v3#SingleBreach
+   * @see <a href=
+   *      "https://haveibeenpwned.com/API/v3#SingleBreach">https://haveibeenpwned.com/API/v3#SingleBreach</a>
    */
   public Breach getSingleBreach(String name) {
     return internalApiRequest(HIBP_API_URL_V3 + "breach/" + name,
