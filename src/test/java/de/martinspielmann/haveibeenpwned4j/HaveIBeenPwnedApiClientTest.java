@@ -33,6 +33,11 @@ class HaveIBeenPwnedApiClientTest {
   void init() {
     clientWithApiKey = new HaveIBeenPwnedApiClient(API_KEY);
     clientWithoutApiKey = new HaveIBeenPwnedApiClient();
+    try {
+      Thread.sleep(2000);
+    } catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+    }
   }
 
 
