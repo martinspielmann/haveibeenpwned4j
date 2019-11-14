@@ -31,7 +31,7 @@ class DefaultBreachListMapperTest {
       }
     };
     // size should be 0 but list not null
-    assertEquals("foo", mapper.map(null).get(0).getName());
+    assertEquals("foo", mapper.map("baz").get(0).getName());
   }
 
 //  @Test
