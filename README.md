@@ -65,7 +65,7 @@ Install Java 11: E.g. [OpenJDK](https://adoptopenjdk.net/?variant=openjdk11&jvmV
 ```java
 /**
  * <strong>Watch out:</strong> Authorization is required for all APIs that enable searching HIBP
- * by email address, namely bet breaches for an account, and getting pastes for and account. 
+ * by email address, namely getting breaches for an account, and getting pastes for and account. 
  * An API key is required to make an authorized call and can
  * be obtained on the API key page.
  * 
