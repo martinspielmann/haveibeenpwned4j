@@ -28,7 +28,10 @@ public class DefaultPwnedPasswordsMapper implements PwnedPasswordsMapper {
       String hashSuffix = StringHelper.getHashSuffix(password);
       String[] lines = responseBody.split("\\r?\\n");
       for (String line : lines) {
-        if (line.split(":")[0].equals(hashSuffix)) {
+        // the response strings consist of HASH_SUFFIX:COUNT
+        // pw has been pwned if hash suffix equals the requested one, and count is not 0. (counts of
+        // 0 are added for padding reasons, see https://haveibeenpwned.com/API/v3#PwnedPasswordsPadding)
+        if (line.split(":")[0].equals(hashSuffix) && !line.split(":")[1].equals("0")) {
           return true;
         }
       }

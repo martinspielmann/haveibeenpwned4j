@@ -314,7 +314,10 @@ public class HaveIBeenPwnedApiClient {
    * @return the http request
    */
   protected HttpRequest buildRequest(String url) {
-    Builder builder = HttpRequest.newBuilder().uri(URI.create(url)).header("user-agent", userAgent);
+    Builder builder = HttpRequest.newBuilder().uri(URI.create(url))
+        .header("user-agent", userAgent)
+        // see https://haveibeenpwned.com/API/v3#PwnedPasswordsPadding
+        .header("Add-Padding", "true");
     // set api key if configured
     if (hibpApiKey != null) {
       builder.header("hibp-api-key", hibpApiKey);
