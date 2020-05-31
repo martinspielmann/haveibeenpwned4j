@@ -34,7 +34,7 @@ Here comes **haveibeenpwned4j** awesomeness:
 
 ### Prerequisites
 
-Install Java on your system
+Install Java on your system. Java version 11 is the minimum required version
 
 * Java: Ubuntu
 ```sh
