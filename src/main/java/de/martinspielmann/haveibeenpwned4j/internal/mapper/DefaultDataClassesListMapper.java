@@ -3,9 +3,10 @@ package de.martinspielmann.haveibeenpwned4j.internal.mapper;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.script.ScriptException;
-import de.martinspielmann.haveibeenpwned4j.internal.mapper.json.ScriptEngineHolder;
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 import de.martinspielmann.haveibeenpwned4j.mapper.DataClassesListMapper;
+import de.martinspielmann.haveibeenpwned4j.mapper.ResponseMapper;
 
 public class DefaultDataClassesListMapper implements DataClassesListMapper {
 
@@ -23,17 +24,10 @@ public class DefaultDataClassesListMapper implements DataClassesListMapper {
     if (json == null || "".equals(json)) {
       return new ArrayList<>();
     }
-    return parseJsonToJavaList(json);
-  }
-
-  @SuppressWarnings("unchecked")
-  protected List<String> parseJsonToJavaList(String json) {
-    String script = "Java.asJSONCompatible(" + json + ")";
     try {
-      return (List<String>) ScriptEngineHolder.get().getScriptEngine().eval(script);
-    } catch (ScriptException e) {
+      return List.of(ResponseMapper.mapType(json, String[].class));
+    } catch (JsonProcessingException e) {
       throw new IllegalStateException("Error parsing json string to list", e);
     }
   }
-
 }
