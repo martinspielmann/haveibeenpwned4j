@@ -5,6 +5,11 @@ import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
+
+@JsonNaming(PropertyNamingStrategy.UpperCamelCaseStrategy.class)
 public class Breach implements Serializable {
 
   private static final long serialVersionUID = 1L;
@@ -18,11 +23,16 @@ public class Breach implements Serializable {
   private Integer pwnCount;
   private String description;
   private List<String> dataClasses;
-  private Boolean isVerified;
-  private Boolean isFabricated;
-  private Boolean isSensitive;
-  private Boolean isRetired;
-  private Boolean isSpamList;
+  @JsonProperty("IsVerified")
+  private Boolean verified;
+  @JsonProperty("IsFabricated")
+  private Boolean fabricated;
+  @JsonProperty("IsSensitive")
+  private Boolean sensitive;
+  @JsonProperty("IsRetired")
+  private Boolean retired;
+  @JsonProperty("IsSpamList")
+  private Boolean spamList;
   private String logoPath;
 
   public String getName() {
@@ -97,45 +107,7 @@ public class Breach implements Serializable {
     this.dataClasses = dataClasses;
   }
 
-  public Boolean isVerified() {
-    return isVerified;
-  }
-
-  public void setVerified(Boolean isVerified) {
-    this.isVerified = isVerified;
-  }
-
-  public Boolean isFabricated() {
-    return isFabricated;
-  }
-
-  public void setFabricated(Boolean isFabricated) {
-    this.isFabricated = isFabricated;
-  }
-
-  public Boolean isSensitive() {
-    return isSensitive;
-  }
-
-  public void setSensitive(Boolean isSensitive) {
-    this.isSensitive = isSensitive;
-  }
-
-  public Boolean isRetired() {
-    return isRetired;
-  }
-
-  public void setRetired(Boolean isRetired) {
-    this.isRetired = isRetired;
-  }
-
-  public Boolean isSpamList() {
-    return isSpamList;
-  }
-
-  public void setSpamList(Boolean isSpamList) {
-    this.isSpamList = isSpamList;
-  }
+ 
 
   public String getLogoPath() {
     return logoPath;
@@ -150,8 +122,48 @@ public class Breach implements Serializable {
     return "Breach [name=" + name + ", title=" + title + ", domain=" + domain + ", breachDate="
         + breachDate + ", addedDate=" + addedDate + ", modifiedDate=" + modifiedDate + ", pwnCount="
         + pwnCount + ", description=" + description + ", dataClasses=" + dataClasses
-        + ", isVerified=" + isVerified + ", isFabricated=" + isFabricated + ", isSensitive="
-        + isSensitive + ", isRetired=" + isRetired + ", isSpamList=" + isSpamList + ", logoPath="
+        + ", verified=" + verified + ", fabricated=" + fabricated + ", isSensitive="
+        + sensitive + ", isRetired=" + retired + ", isSpamList=" + spamList + ", logoPath="
         + logoPath + "]";
+  }
+
+  public Boolean getVerified() {
+    return verified;
+  }
+
+  public void setVerified(Boolean verified) {
+    this.verified = verified;
+  }
+
+  public Boolean getFabricated() {
+    return fabricated;
+  }
+
+  public void setFabricated(Boolean fabricated) {
+    this.fabricated = fabricated;
+  }
+
+  public Boolean getSensitive() {
+    return sensitive;
+  }
+
+  public void setSensitive(Boolean sensitive) {
+    this.sensitive = sensitive;
+  }
+
+  public Boolean getRetired() {
+    return retired;
+  }
+
+  public void setRetired(Boolean retired) {
+    this.retired = retired;
+  }
+
+  public Boolean getSpamList() {
+    return spamList;
+  }
+
+  public void setSpamList(Boolean spamList) {
+    this.spamList = spamList;
   }
 }

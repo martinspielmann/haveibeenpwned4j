@@ -3,6 +3,10 @@ package de.martinspielmann.haveibeenpwned4j.model;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
+
+@JsonNaming(PropertyNamingStrategy.UpperCamelCaseStrategy.class)
 public class Paste implements Serializable {
 
   private static final long serialVersionUID = 1L;

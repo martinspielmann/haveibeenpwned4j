@@ -25,7 +25,6 @@ Here comes **haveibeenpwned4j** awesomeness:
   * Check if an account has been in a paste	✔
   * Get all breaches (or based on a domain)	✔
   * Get a single breach	✔
-* No dependencies	✔
 * Apache License Version 2.0 ✔
 * Available from Maven Central ✔
 

@@ -178,7 +178,7 @@ class HaveIBeenPwnedApiClientTest {
     breachesForAccount.forEach(b -> {
       assertNull(b.getAddedDate());
       assertNull(b.getBreachDate());
-      assertTrue(b.getDataClasses().isEmpty());
+      assertTrue(b.getDataClasses() == null || b.getDataClasses().isEmpty());
       assertNull(b.getDescription());
       assertNull(b.getDomain());
       assertNull(b.getLogoPath());
