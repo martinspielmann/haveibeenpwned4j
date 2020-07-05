@@ -55,7 +55,7 @@ Install Java 11: E.g. [OpenJDK](https://adoptopenjdk.net/?variant=openjdk11&jvmV
 <dependency>
   <groupId>de.martinspielmann.haveibeenpwned4j</groupId>
   <artifactId>haveibeenpwned4j</artifactId>
-  <version>1.0.0</version>
+  <version>2.0.0</version>
 </dependency>
 ```
 
