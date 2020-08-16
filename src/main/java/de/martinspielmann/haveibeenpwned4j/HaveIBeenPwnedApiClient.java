@@ -12,6 +12,7 @@ import java.net.http.HttpResponse.BodyHandler;
 import java.net.http.HttpResponse.BodyHandlers;
 import java.net.http.HttpResponse.BodySubscribers;
 import java.nio.charset.StandardCharsets;
+import java.time.Duration;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.script.ScriptEngine;
@@ -82,7 +83,7 @@ public class HaveIBeenPwnedApiClient {
    * @see <a href="https://haveibeenpwned.com/API/Key">https://haveibeenpwned.com/API/Key</a>
    */
   public HaveIBeenPwnedApiClient() {
-    this(null, null, null);
+    this(null, null, null, null);
   }
 
   /**
@@ -101,7 +102,7 @@ public class HaveIBeenPwnedApiClient {
    * @see <a href="https://haveibeenpwned.com/API/Key">https://haveibeenpwned.com/API/Key</a>
    */
   public HaveIBeenPwnedApiClient(String hibpApiKey) {
-    this(hibpApiKey, null, null);
+    this(hibpApiKey, null, null, null);
   }
 
   /**
@@ -121,7 +122,11 @@ public class HaveIBeenPwnedApiClient {
    * @see <a href="https://haveibeenpwned.com/API/Key">https://haveibeenpwned.com/API/Key</a>
    */
   public HaveIBeenPwnedApiClient(String hibpApiKey, InetSocketAddress proxy) {
-    this(hibpApiKey, proxy, null);
+    this(hibpApiKey, proxy, null, null);
+  }
+
+  public HaveIBeenPwnedApiClient(String hibpApiKey, InetSocketAddress proxy, String userAgent) {
+    this(hibpApiKey, proxy, userAgent, null);
   }
 
   /**
@@ -137,12 +142,13 @@ public class HaveIBeenPwnedApiClient {
    * @param hibpApiKey the API key
    * @param proxy the proxy
    * @param userAgent the user agent
+   * @param connectionTimeout the connection timeout duration for the HttpClient
    * 
    * @see <a href=
    *      "https://haveibeenpwned.com/API/v3#Authorisation">https://haveibeenpwned.com/API/v3#Authorisation</a>
    * @see <a href="https://haveibeenpwned.com/API/Key">https://haveibeenpwned.com/API/Key</a>
    */
-  public HaveIBeenPwnedApiClient(String hibpApiKey, InetSocketAddress proxy, String userAgent) {
+  public HaveIBeenPwnedApiClient(String hibpApiKey, InetSocketAddress proxy, String userAgent, Duration connectionTimeout) {
     super();
     if (hibpApiKey != null) {
       this.hibpApiKey = hibpApiKey;
@@ -155,6 +161,10 @@ public class HaveIBeenPwnedApiClient {
     // set proxy if configured
     if (proxy != null) {
       builder.proxy(ProxySelector.of(proxy));
+    }
+    // set connection timeout if configured
+    if (connectionTimeout != null) {
+      builder.connectTimeout(connectionTimeout);
     }
     this.httpClient = builder.build();
     if (userAgent != null) {
