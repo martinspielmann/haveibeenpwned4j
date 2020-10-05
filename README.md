@@ -2,9 +2,9 @@
 
 The ultimate Java library for [Troy Hunt's](https://www.troyhunt.com/) `';-- Have I Been Pwned: API v3`.
 
-[![Build Status](https://github.com/pingunaut/haveibeenpwned4j/workflows/Java%20CI/badge.svg)](https://github.com/pingunaut/haveibeenpwned4j/actions)
-![Contributors](https://img.shields.io/github/contributors/pingunaut/haveibeenpwned4j.svg)
-[![Apache-2.0](https://img.shields.io/github/license/pingunaut/haveibeenpwned4j.svg)](https://raw.githubusercontent.com/pingunaut/haveibeenpwned4j/master/LICENSE)
+[![Build Status](https://github.com/martinspielmann/haveibeenpwned4j/workflows/Java%20CI/badge.svg)](https://github.com/martinspielmann/haveibeenpwned4j/actions)
+![Contributors](https://img.shields.io/github/contributors/martinspielmann/haveibeenpwned4j.svg)
+[![Apache-2.0](https://img.shields.io/github/license/martinspielmann/haveibeenpwned4j.svg)](https://raw.githubusercontent.com/martinspielmann/haveibeenpwned4j/master/LICENSE)
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=de.martinspielmann.haveibeenpwned4j%3Ahaveibeenpwned4j&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=de.martinspielmann.haveibeenpwned4j%3Ahaveibeenpwned4j)
 [![Coverage](https://img.shields.io/sonar/https/sonarcloud.io/de.martinspielmann.haveibeenpwned4j%3Ahaveibeenpwned4j/coverage.svg)](https://sonarcloud.io/component_measures?id=de.martinspielmann.haveibeenpwned4j%3Ahaveibeenpwned4j&metric=coverage)
 
@@ -93,9 +93,9 @@ List<Paste> pastes = client.getPastesForAccount("foo.bar@example.com");
 ## Contributing
 
 If you have any problem or idea, dont hesitate to
-<a href="https://github.com/pingunaut/haveibeenpwned4j/issues">report a bug</a>
+<a href="https://github.com/martinspielmann/haveibeenpwned4j/issues">report a bug</a>
 or
-<a href="https://github.com/pingunaut/haveibeenpwned4j/issues">request a feature</a>.
+<a href="https://github.com/martinspielmann/haveibeenpwned4j/issues">request a feature</a>.
 
 If you want to help out with some code, tests or documentation, just follow these steps:
 
@@ -127,7 +127,7 @@ sudo dnf install maven
 ### Develop
 
 ```sh
-git clone https://github.com/pingunaut/haveibeenpwned4j.git
+git clone https://github.com/martinspielmann/haveibeenpwned4j.git
 cd haveibeenpwned4j
 
 # to make all the tests run, you need to provide your HIBP API key as an environment variable
@@ -147,9 +147,9 @@ Distributed under the Apache License Version 2.0. See `LICENSE` for more informa
 
 ## Contact
 
-Martin Spielmann - [@pingunaut](https://twitter.com/pingunaut)
+Martin Spielmann - [@martspielmann](https://twitter.com/martspielmann)
 
-Project Link: [https://github.com/pingunaut/haveibeenpwned4j](https://github.com/pingunaut/haveibeenpwned4j)
+Project Link: [https://github.com/martinspielmann/haveibeenpwned4j](https://github.com/martinspielmann/haveibeenpwned4j)
 
 
 ## Acknowledgements
