@@ -2,56 +2,56 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.martinspielmann.haveibeenpwned4j</groupId>
   <artifactId>haveibeenpwned4j</artifactId>
-  <version>2.0.2-SNAPSHOT</version>
+  <version>3.0.0-SNAPSHOT</version>
   <name>haveibeenpwned4j</name>
   <description>The ultimate Java library for Troy Hunt's ';-- Have I Been Pwned: API v3</description>
-  <url>https://github.com/pingunaut/haveibeenpwned4j</url>
+  <url>https://github.com/martinspielmann/haveibeenpwned4j</url>
 
   <licenses>
     <license>
       <name>The Apache Software License, Version 2.0</name>
-      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
       <distribution>repo</distribution>
     </license>
   </licenses>
 
   <scm>
-    <connection>scm:git:git@github.com:pingunaut/haveibeenpwned4j.git</connection>
-    <developerConnection>scm:git:git@github.com:pingunaut/haveibeenpwned4j.git</developerConnection>
-    <url>https://github.com/pingunaut/haveibeenpwned4j</url>
-    <tag>haveibeenpwned4j-2.0.1</tag>
+    <connection>scm:git:git@github.com:martinspielmann/haveibeenpwned4j.git</connection>
+    <developerConnection>scm:git:git@github.com:martinspielmann/haveibeenpwned4j.git</developerConnection>
+    <url>https://github.com/martinspielmann/haveibeenpwned4j</url>
+    <tag>HEAD</tag>
   </scm>
 
   <developers>
     <developer>
-      <id>pingunaut</id>
+      <id>martinspielmann</id>
       <name>Martin Spielmann</name>
       <email>mail@martinspielmann.de</email>
     </developer>
   </developers>
 
   <properties>
-    <java.version>11</java.version>
+    <java.version>25</java.version>
+    <maven.compiler.release>${java.version}</maven.compiler.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <junit5.version>5.9.2</junit5.version>
-    <jackson.version>2.14.2</jackson.version>
-    <jacoco-maven-plugin.version>0.8.8</jacoco-maven-plugin.version>
-    <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
-    <maven-surefire-plugin.version>3.0.0-M9</maven-surefire-plugin.version>
-    <maven-release-plugin.version>3.0.0-M7</maven-release-plugin.version>
-    <maven-javadoc-plugin.version>3.5.0</maven-javadoc-plugin.version>
-    <sonar-maven-plugin.version>3.9.1.2184</sonar-maven-plugin.version>
-    <nexus-staging-maven-plugin.version>1.6.13</nexus-staging-maven-plugin.version>
-    <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
-    <maven-gpg-plugin.version>3.0.1</maven-gpg-plugin.version>
+    <junit.version>6.1.3</junit.version>
+    <jackson.version>2.22.4</jackson.version>
+    <jacoco-maven-plugin.version>0.8.16</jacoco-maven-plugin.version>
+    <maven-compiler-plugin.version>3.16.0</maven-compiler-plugin.version>
+    <maven-surefire-plugin.version>3.6.1</maven-surefire-plugin.version>
+    <maven-release-plugin.version>3.3.1</maven-release-plugin.version>
+    <maven-javadoc-plugin.version>3.12.0</maven-javadoc-plugin.version>
+    <central-publishing-maven-plugin.version>0.12.0</central-publishing-maven-plugin.version>
+    <maven-source-plugin.version>3.4.0</maven-source-plugin.version>
+    <maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>
   </properties>
 
   <dependencies>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-engine</artifactId>
-      <version>${junit5.version}</version>
+      <artifactId>junit-jupiter</artifactId>
+      <version>${junit.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -74,8 +74,7 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>${maven-compiler-plugin.version}</version>
         <configuration>
-          <source>${java.version}</source>
-          <target>${java.version}</target>
+          <release>${java.version}</release>
           <encoding>${project.build.sourceEncoding}</encoding>
           <showWarnings>true</showWarnings>
           <showDeprecation>true</showDeprecation>
@@ -132,17 +131,12 @@
     <pluginManagement>
       <plugins>
         <plugin>
-          <groupId>org.sonarsource.scanner.maven</groupId>
-          <artifactId>sonar-maven-plugin</artifactId>
-          <version>${sonar-maven-plugin.version}</version>
-        </plugin>
-        <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-javadoc-plugin</artifactId>
           <version>${maven-javadoc-plugin.version}</version>
           <configuration>
-            <source>${java.version}</source>
-            <source>${java.version}</source>
+            <release>${java.version}</release>
+            <doclint>all,-missing</doclint>
           </configuration>
         </plugin>
       </plugins>
@@ -155,14 +149,13 @@
       <build>
         <plugins>
           <plugin>
-            <groupId>org.sonatype.plugins</groupId>
-            <artifactId>nexus-staging-maven-plugin</artifactId>
-            <version>${nexus-staging-maven-plugin.version}</version>
+            <groupId>org.sonatype.central</groupId>
+            <artifactId>central-publishing-maven-plugin</artifactId>
+            <version>${central-publishing-maven-plugin.version}</version>
             <extensions>true</extensions>
             <configuration>
-              <serverId>ossrh</serverId>
-              <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-              <autoReleaseAfterClose>true</autoReleaseAfterClose>
+              <publishingServerId>central</publishingServerId>
+              <autoPublish>true</autoPublish>
             </configuration>
           </plugin>
           <plugin>
@@ -206,16 +199,6 @@
           </plugin>
         </plugins>
       </build>
-      <distributionManagement>
-        <snapshotRepository>
-          <id>ossrh</id>
-          <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-        </snapshotRepository>
-        <repository>
-          <id>ossrh</id>
-          <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-        </repository>
-      </distributionManagement>
     </profile>
   </profiles>
 </project>

@@ -4,166 +4,55 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.List;
-
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
-@JsonNaming(PropertyNamingStrategy.UpperCamelCaseStrategy.class)
-public class Breach implements Serializable {
-
-  private static final long serialVersionUID = 1L;
-
-  private String name;
-  private String title;
-  private String domain;
-  private LocalDate breachDate;
-  private ZonedDateTime addedDate;
-  private ZonedDateTime modifiedDate;
-  private Integer pwnCount;
-  private String description;
-  private List<String> dataClasses;
-  @JsonProperty("IsVerified")
-  private Boolean verified;
-  @JsonProperty("IsFabricated")
-  private Boolean fabricated;
-  @JsonProperty("IsSensitive")
-  private Boolean sensitive;
-  @JsonProperty("IsRetired")
-  private Boolean retired;
-  @JsonProperty("IsSpamList")
-  private Boolean spamList;
-  private String logoPath;
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public String getTitle() {
-    return title;
-  }
-
-  public void setTitle(String title) {
-    this.title = title;
-  }
-
-  public String getDomain() {
-    return domain;
-  }
-
-  public void setDomain(String domain) {
-    this.domain = domain;
-  }
-
-  public LocalDate getBreachDate() {
-    return breachDate;
-  }
-
-  public void setBreachDate(LocalDate breachDate) {
-    this.breachDate = breachDate;
-  }
-
-  public ZonedDateTime getAddedDate() {
-    return addedDate;
-  }
-
-  public void setAddedDate(ZonedDateTime addedDate) {
-    this.addedDate = addedDate;
-  }
-
-  public ZonedDateTime getModifiedDate() {
-    return modifiedDate;
-  }
-
-  public void setModifiedDate(ZonedDateTime modifiedDate) {
-    this.modifiedDate = modifiedDate;
-  }
-
-  public Integer getPwnCount() {
-    return pwnCount;
-  }
-
-  public void setPwnCount(Integer pwnCount) {
-    this.pwnCount = pwnCount;
-  }
-
-  public String getDescription() {
-    return description;
-  }
-
-  public void setDescription(String description) {
-    this.description = description;
-  }
-
-  public List<String> getDataClasses() {
-    return dataClasses;
-  }
-
-  public void setDataClasses(List<String> dataClasses) {
-    this.dataClasses = dataClasses;
-  }
-
- 
-
-  public String getLogoPath() {
-    return logoPath;
-  }
-
-  public void setLogoPath(String logoPath) {
-    this.logoPath = logoPath;
-  }
-
-  @Override
-  public String toString() {
-    return "Breach [name=" + name + ", title=" + title + ", domain=" + domain + ", breachDate="
-        + breachDate + ", addedDate=" + addedDate + ", modifiedDate=" + modifiedDate + ", pwnCount="
-        + pwnCount + ", description=" + description + ", dataClasses=" + dataClasses
-        + ", verified=" + verified + ", fabricated=" + fabricated + ", isSensitive="
-        + sensitive + ", isRetired=" + retired + ", isSpamList=" + spamList + ", logoPath="
-        + logoPath + "]";
-  }
-
-  public Boolean getVerified() {
-    return verified;
-  }
-
-  public void setVerified(Boolean verified) {
-    this.verified = verified;
-  }
-
-  public Boolean getFabricated() {
-    return fabricated;
-  }
-
-  public void setFabricated(Boolean fabricated) {
-    this.fabricated = fabricated;
-  }
-
-  public Boolean getSensitive() {
-    return sensitive;
-  }
-
-  public void setSensitive(Boolean sensitive) {
-    this.sensitive = sensitive;
-  }
-
-  public Boolean getRetired() {
-    return retired;
-  }
-
-  public void setRetired(Boolean retired) {
-    this.retired = retired;
-  }
-
-  public Boolean getSpamList() {
-    return spamList;
-  }
-
-  public void setSpamList(Boolean spamList) {
-    this.spamList = spamList;
-  }
+/**
+ * Represents a breach incident returned by the Have I Been Pwned API v3.
+ *
+ * @param name Pascal-cased unique name representing the breach
+ * @param title Descriptive title suitable for displaying to end users
+ * @param domain Domain of the primary website the breach occurred on
+ * @param breachDate Date the breach originally occurred
+ * @param addedDate Date and time the breach was added to HIBP
+ * @param modifiedDate Date and time the breach was last modified in HIBP
+ * @param pwnCount Total number of accounts loaded into the system for this breach
+ * @param description HTML overview of the breach
+ * @param dataClasses Alphabetically ordered list of compromised data classes
+ * @param verified Whether the breach has been verified
+ * @param fabricated Whether the breach is considered fabricated
+ * @param sensitive Whether the breach is considered sensitive
+ * @param retired Whether the breach has been retired
+ * @param spamList Whether the breach is considered a spam list
+ * @param malware Whether the breach is sourced from malware
+ * @param subscriptionFree Whether the breach is subscription-free in domain searches
+ * @param stealerLog Whether the breach is sourced from stealer logs
+ * @param logoPath URI/filename of the breached service's PNG logo
+ * @param attribution Attribution text if requested by the data provider
+ */
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonNaming(PropertyNamingStrategies.UpperCamelCaseStrategy.class)
+public record Breach(
+    String name,
+    String title,
+    String domain,
+    LocalDate breachDate,
+    ZonedDateTime addedDate,
+    ZonedDateTime modifiedDate,
+    Integer pwnCount,
+    String description,
+    List<String> dataClasses,
+    @JsonProperty("IsVerified") Boolean verified,
+    @JsonProperty("IsFabricated") Boolean fabricated,
+    @JsonProperty("IsSensitive") Boolean sensitive,
+    @JsonProperty("IsRetired") Boolean retired,
+    @JsonProperty("IsSpamList") Boolean spamList,
+    @JsonProperty("IsMalware") Boolean malware,
+    @JsonProperty("IsSubscriptionFree") Boolean subscriptionFree,
+    @JsonProperty("IsStealerLog") Boolean stealerLog,
+    String logoPath,
+    String attribution) implements Serializable {
 }
+
