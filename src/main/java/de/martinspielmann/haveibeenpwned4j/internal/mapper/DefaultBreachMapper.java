@@ -1,25 +1,21 @@
 package de.martinspielmann.haveibeenpwned4j.internal.mapper;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-
 import de.martinspielmann.haveibeenpwned4j.mapper.BreachMapper;
 import de.martinspielmann.haveibeenpwned4j.mapper.ResponseMapper;
 import de.martinspielmann.haveibeenpwned4j.model.Breach;
 
 public class DefaultBreachMapper implements BreachMapper {
 
-  private static DefaultBreachMapper instance;
+  private static final DefaultBreachMapper INSTANCE = new DefaultBreachMapper();
 
   public static DefaultBreachMapper get() {
-    if (instance == null) {
-      instance = new DefaultBreachMapper();
-    }
-    return instance;
+    return INSTANCE;
   }
 
   @Override
   public Breach map(String json) {
-    if (json == null || "".equals(json)) {
+    if (json == null || json.isBlank()) {
       return null;
     }
     try {
@@ -29,3 +25,4 @@ public class DefaultBreachMapper implements BreachMapper {
     }
   }
 }
+

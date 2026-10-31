@@ -2,26 +2,21 @@ package de.martinspielmann.haveibeenpwned4j.internal.mapper;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
-
 import de.martinspielmann.haveibeenpwned4j.mapper.DataClassesListMapper;
 import de.martinspielmann.haveibeenpwned4j.mapper.ResponseMapper;
 
 public class DefaultDataClassesListMapper implements DataClassesListMapper {
 
-  private static DefaultDataClassesListMapper instance;
+  private static final DefaultDataClassesListMapper INSTANCE = new DefaultDataClassesListMapper();
 
   public static DefaultDataClassesListMapper get() {
-    if (instance == null) {
-      instance = new DefaultDataClassesListMapper();
-    }
-    return instance;
+    return INSTANCE;
   }
 
   @Override
   public List<String> map(String json) {
-    if (json == null || "".equals(json)) {
+    if (json == null || json.isBlank()) {
       return new ArrayList<>();
     }
     try {
@@ -31,3 +26,4 @@ public class DefaultDataClassesListMapper implements DataClassesListMapper {
     }
   }
 }
+

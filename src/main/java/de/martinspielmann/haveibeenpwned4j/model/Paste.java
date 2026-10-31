@@ -2,65 +2,26 @@ package de.martinspielmann.haveibeenpwned4j.model;
 
 import java.io.Serializable;
 import java.time.ZonedDateTime;
-
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
-@JsonNaming(PropertyNamingStrategy.UpperCamelCaseStrategy.class)
-public class Paste implements Serializable {
-
-  private static final long serialVersionUID = 1L;
-
-  private String source;
-  private String id;
-  private String title;
-  private ZonedDateTime date;
-  private Integer emailCount;
-
-  public String getSource() {
-    return source;
-  }
-
-  public void setSource(String source) {
-    this.source = source;
-  }
-
-  public String getId() {
-    return id;
-  }
-
-  public void setId(String id) {
-    this.id = id;
-  }
-
-  public String getTitle() {
-    return title;
-  }
-
-  public void setTitle(String title) {
-    this.title = title;
-  }
-
-  public ZonedDateTime getDate() {
-    return date;
-  }
-
-  public void setDate(ZonedDateTime date) {
-    this.date = date;
-  }
-
-  public Integer getEmailCount() {
-    return emailCount;
-  }
-
-  public void setEmailCount(Integer emailCount) {
-    this.emailCount = emailCount;
-  }
-
-  @Override
-  public String toString() {
-    return "Paste [source=" + source + ", id=" + id + ", title=" + title + ", date=" + date
-        + ", emailCount=" + emailCount + "]";
-  }
-
+/**
+ * Represents a paste entry returned by the Have I Been Pwned API v3.
+ *
+ * @param source Paste service the record was retrieved from
+ * @param id ID of the paste at the source service
+ * @param title Title of the paste as observed on the source site (may be null)
+ * @param date Date and time the paste was posted (may be null)
+ * @param emailCount Number of email addresses found in the paste
+ */
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonNaming(PropertyNamingStrategies.UpperCamelCaseStrategy.class)
+public record Paste(
+    String source,
+    String id,
+    String title,
+    ZonedDateTime date,
+    Integer emailCount) implements Serializable {
 }
+

@@ -1,34 +1,31 @@
 package de.martinspielmann.haveibeenpwned4j;
 
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
- * Represents the status of HIBP API response.
+ * Represents the HTTP status of a Have I Been Pwned API response.
  *
  * @author Martin Spielmann
  */
 public enum Status {
 
-  UNKNOWN_API_ERROR(-1, true), 
-  OK(200, false), 
-  BAD_REQUEST(400, true), 
-  UNAUTHORIZED(401, true), 
-  FORBIDDEN(403, true), 
-  NOT_FOUND(404, false), 
+  UNKNOWN_API_ERROR(-1, true),
+  OK(200, false),
+  BAD_REQUEST(400, true),
+  UNAUTHORIZED(401, true),
+  FORBIDDEN(403, true),
+  NOT_FOUND(404, false),
   TOO_MANY_REQUESTS(429, true),
   SERVICE_UNAVAILABLE(503, true);
 
-  private int code;
-  private boolean isError;
+  private static final Map<Integer, Status> BY_CODE =
+      Arrays.stream(values()).collect(Collectors.toUnmodifiableMap(Status::getCode, Function.identity()));
 
-  private static final Map<Integer, Status> map = new HashMap<>();
-
-  static {
-    for (Status s : Status.values()) {
-      map.put(s.code, s);
-    }
-  }
+  private final int code;
+  private final boolean isError;
 
   Status(int code, boolean isError) {
     this.code = code;
@@ -38,16 +35,13 @@ public enum Status {
   public int getCode() {
     return code;
   }
-  
+
   public boolean isError() {
     return isError;
   }
 
   public static Status of(int code) {
-    Status s = map.get(code);
-    if (s == null) {
-      s = UNKNOWN_API_ERROR;
-    }
-    return s;
+    return BY_CODE.getOrDefault(code, UNKNOWN_API_ERROR);
   }
 }
+

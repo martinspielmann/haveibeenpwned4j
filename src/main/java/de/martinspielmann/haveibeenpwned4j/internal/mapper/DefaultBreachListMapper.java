@@ -2,28 +2,22 @@ package de.martinspielmann.haveibeenpwned4j.internal.mapper;
 
 import java.util.ArrayList;
 import java.util.List;
-
-
 import com.fasterxml.jackson.core.JsonProcessingException;
-
 import de.martinspielmann.haveibeenpwned4j.mapper.BreachListMapper;
 import de.martinspielmann.haveibeenpwned4j.mapper.ResponseMapper;
 import de.martinspielmann.haveibeenpwned4j.model.Breach;
 
 public class DefaultBreachListMapper implements BreachListMapper {
 
-  private static DefaultBreachListMapper instance;
+  private static final DefaultBreachListMapper INSTANCE = new DefaultBreachListMapper();
 
   public static DefaultBreachListMapper get() {
-    if (instance == null) {
-      instance = new DefaultBreachListMapper();
-    }
-    return instance;
+    return INSTANCE;
   }
 
   @Override
   public List<Breach> map(String json) {
-    if (json == null || "".equals(json)) {
+    if (json == null || json.isBlank()) {
       return new ArrayList<>();
     }
     try {
@@ -33,3 +27,4 @@ public class DefaultBreachListMapper implements BreachListMapper {
     }
   }
 }
+

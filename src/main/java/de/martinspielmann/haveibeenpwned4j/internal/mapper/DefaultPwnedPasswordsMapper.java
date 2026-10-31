@@ -4,41 +4,59 @@ import de.martinspielmann.haveibeenpwned4j.HaveIBeenPwnedException;
 import de.martinspielmann.haveibeenpwned4j.Status;
 import de.martinspielmann.haveibeenpwned4j.StringHelper;
 import de.martinspielmann.haveibeenpwned4j.mapper.PwnedPasswordsMapper;
+import de.martinspielmann.haveibeenpwned4j.model.HashMode;
 
 public class DefaultPwnedPasswordsMapper implements PwnedPasswordsMapper {
 
-  private static DefaultPwnedPasswordsMapper instance;
+  private static final DefaultPwnedPasswordsMapper INSTANCE = new DefaultPwnedPasswordsMapper();
 
   public static DefaultPwnedPasswordsMapper get() {
-    if (instance == null) {
-      instance = new DefaultPwnedPasswordsMapper();
-    }
-    return instance;
+    return INSTANCE;
   }
 
   @Override
   public boolean map(int responseStatus, String responseBody, String password) {
-    Status status = Status.of(responseStatus);
-    // if nothing is found or everything is OK
-    if (status.equals(Status.NOT_FOUND)) {
-      return false;
-    } else if (status.equals(Status.OK)) {
-      // hash prefix is found. check if the actual password is included
-      // if there were results, check if your pw hash was pwned
-      String hashSuffix = StringHelper.getHashSuffix(password);
-      String[] lines = responseBody.split("\\r?\\n");
-      for (String line : lines) {
-        // the response strings consist of HASH_SUFFIX:COUNT
-        // pw has been pwned if hash suffix equals the requested one, and count is not 0. (counts of
-        // 0 are added for padding reasons, see https://haveibeenpwned.com/API/v3#PwnedPasswordsPadding)
-        if (line.split(":")[0].equals(hashSuffix) && !line.split(":")[1].equals("0")) {
-          return true;
-        }
-      }
-      return false;
-    } else {
-      throw new HaveIBeenPwnedException("Error checking for pwned password", status);
-    }
+    return mapCount(responseStatus, responseBody, password, HashMode.SHA1) > 0;
   }
 
+  @Override
+  public long mapCount(int responseStatus, String responseBody, String password, HashMode hashMode) {
+    Status status = Status.of(responseStatus);
+    if (status == Status.NOT_FOUND) {
+      return 0L;
+    }
+    if (status == Status.OK) {
+      if (responseBody == null || responseBody.isBlank()) {
+        return 0L;
+      }
+      String hashSuffix = hashMode == HashMode.NTLM
+          ? StringHelper.getNtlmHashSuffix(password)
+          : StringHelper.getHashSuffix(password);
+      return responseBody.lines()
+          .map(String::trim)
+          .filter(line -> !line.isEmpty())
+          .mapToLong(line -> parseMatchingCount(line, hashSuffix))
+          .filter(count -> count > 0)
+          .findFirst()
+          .orElse(0L);
+    }
+    throw new HaveIBeenPwnedException("Error checking for pwned password", status);
+  }
+
+  private static long parseMatchingCount(String line, String hashSuffix) {
+    int colonIndex = line.indexOf(':');
+    if (colonIndex <= 0 || colonIndex == line.length() - 1) {
+      return 0L;
+    }
+    String suffix = line.substring(0, colonIndex).trim();
+    if (!suffix.equalsIgnoreCase(hashSuffix)) {
+      return 0L;
+    }
+    try {
+      return Long.parseLong(line.substring(colonIndex + 1).trim());
+    } catch (NumberFormatException _) {
+      return 0L;
+    }
+  }
 }
+
